@@ -7,7 +7,7 @@ class SteganographyGUI:
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("Incognito - Image Steganography Tool")
-        self.root.geometry("600x400")
+        self.root.geometry("600x450")
         
         self.steg_tool = SteganographyTool()
         
@@ -30,16 +30,22 @@ class SteganographyGUI:
         self.message_text = tk.Text(main_frame, height=5, width=50)
         self.message_text.grid(row=1, column=1, columnspan=2, pady=10)
         
+        # Password input
+        ttk.Label(main_frame, text="Password:").grid(row=2, column=0, sticky=tk.W)
+        self.password_var = tk.StringVar()
+        self.password_entry = ttk.Entry(main_frame, textvariable=self.password_var, show="*", width=50)
+        self.password_entry.grid(row=2, column=1, columnspan=2, pady=10)
+        
         # Action buttons
         button_frame = ttk.Frame(main_frame)
-        button_frame.grid(row=2, column=0, columnspan=3, pady=20)
+        button_frame.grid(row=3, column=0, columnspan=3, pady=20)
         
         ttk.Button(button_frame, text="Embed Message", command=self.embed_message).pack(side=tk.LEFT, padx=5)
         ttk.Button(button_frame, text="Extract Message", command=self.extract_message).pack(side=tk.LEFT, padx=5)
         
         # Status label
         self.status_var = tk.StringVar()
-        ttk.Label(main_frame, textvariable=self.status_var).grid(row=3, column=0, columnspan=3)
+        ttk.Label(main_frame, textvariable=self.status_var).grid(row=4, column=0, columnspan=3)
     
     def browse_image(self):
         filename = filedialog.askopenfilename(
@@ -58,6 +64,11 @@ class SteganographyGUI:
             messagebox.showerror("Error", "Please enter a message to embed")
             return
             
+        password = self.password_var.get()
+        if not password:
+            messagebox.showerror("Error", "Please enter a password")
+            return
+            
         output_path = filedialog.asksaveasfilename(
             defaultextension=".png",
             filetypes=[("PNG files", "*.png")]
@@ -66,11 +77,14 @@ class SteganographyGUI:
             success, result = self.steg_tool.embed_message(
                 self.image_path.get(),
                 message,
+                password,
                 output_path
             )
             
             if success:
                 messagebox.showinfo("Success", result)
+                self.message_text.delete("1.0", tk.END)
+                self.password_var.set("")
             else:
                 messagebox.showerror("Error", result)
     
@@ -79,7 +93,12 @@ class SteganographyGUI:
             messagebox.showerror("Error", "Please select an image first")
             return
             
-        success, result = self.steg_tool.extract_message(self.image_path.get())
+        password = self.password_var.get()
+        if not password:
+            messagebox.showerror("Error", "Please enter a password")
+            return
+            
+        success, result = self.steg_tool.extract_message(self.image_path.get(), password)
         
         if success:
             self.message_text.delete("1.0", tk.END)
