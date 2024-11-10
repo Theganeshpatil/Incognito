@@ -1,11 +1,13 @@
 # INCOGNITO - IMAGE STEGANOGRAPHY TOOL
 
 ## Description
+
 Incognito is a Python-based steganography tool that allows users to hide secret messages within images using the Least Significant Bit (LSB) encoding technique. The tool provides a simple graphical interface for embedding messages into images and extracting hidden messages from steganographic images.
 
 ## Features
+
 - User-friendly graphical interface
-- Embed text messages in images using LSB steganography  
+- Embed text messages in images using LSB steganography
 - Extract hidden messages from steganographic images
 - Support for common image formats (PNG, JPG, JPEG, BMP)
 - Minimal visual impact on carrier images
@@ -13,56 +15,61 @@ Incognito is a Python-based steganography tool that allows users to hide secret 
 - Real-time feedback on operations
 
 ## Technical Details
+
 The tool uses the Least Significant Bit (LSB) steganography technique, which works by:
+
 - Converting the secret message into binary
 - Replacing the least significant bit of each color channel (RGB) in the image pixels
 - Using a special end marker to identify where the hidden message ends
 - Preserving image quality while hiding information
 
 ## Prerequisites
+
 - Python 3.7 or higher
 - pip (Python package installer)
 
 ## Installation
+
 1. Create and activate a virtual environment:
 
    **Windows:**
+
    ```bash
    python -m venv venv
    venv\Scripts\activate
-    ```
-    **macOS/Linux:**
+   ```
 
-```bash
-python -m venv venv
-source venv/bin/activate
-```
+   **macOS/Linux:**
+
+   ```bash
+   python -m venv venv
+   source venv/bin/activate
+   ```
 
 1. Install required dependencies:
-    
-    ```bash
-    pip install -r requirements.txt
-    ```
-    
+
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 ## Usage
 
 1. Start the application:
-    
-    ```bash
-    python -m src.main
-    ```
-    
+
+   ```bash
+   python -m src.main
+   ```
+
 2. To embed a message:
-    - Click "Browse" to select an input image
-    - Enter your secret message in the text area
-    - Click "Embed Message"
-    - Choose a location to save the output image
-    - Wait for confirmation
+   - Click "Browse" to select an input image
+   - Enter your secret message in the text area
+   - Click "Embed Message"
+   - Choose a location to save the output image
+   - Wait for confirmation
 3. To extract a message:
-    - Click "Browse" to select an image with a hidden message
-    - Click "Extract Message"
-    - The hidden message will appear in the text area
+   - Click "Browse" to select an image with a hidden message
+   - Click "Extract Message"
+   - The hidden message will appear in the text area
 
 ## Project Structure
 
